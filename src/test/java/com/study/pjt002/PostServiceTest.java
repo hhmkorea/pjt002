@@ -4,23 +4,25 @@ import com.study.pjt002.domain.post.PostRequest;
 import com.study.pjt002.domain.post.PostService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 /**
  * packageName    : com.study.pjt002
  * fileName       : PostServiceTest
  * author         : dotdot
  * date           : 2024-10-03
- * description    :
+ * description    : Service 테스트
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
  * 2024-10-03        dotdot       최초 생성
  */
-@SuppressWarnings("ALL")
+
+@SpringBootTest
 public class PostServiceTest {
 
     @Autowired
-    PostService postService; // PostService Bean을 클랙스에 주입.
+    PostService postService; // PostService Bean을 클래스에 주입.
 
     @Test
     void save() {

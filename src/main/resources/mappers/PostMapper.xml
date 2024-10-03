@@ -21,7 +21,9 @@
 
 
     <!-- 게시글 저장 -->
-    <insert id="save" parameterType="com.study.pjt002.domain.post.PostRequest">
+    <!--<insert id="save" parameterType="com.study.pjt002.domain.post.PostRequest">-->
+    <insert id="save" parameterType="com.study.pjt002.domain.post.PostRequest" useGeneratedKeys="true" keyProperty="id">
+        <!-- useGeneratedKeys : auto_increment된 id 객체 자동으로 담아줌.-->
         INSERT INTO tb_post (
         <include refid="postColumns" />
         ) VALUES (

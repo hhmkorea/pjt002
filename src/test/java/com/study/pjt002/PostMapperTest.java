@@ -18,19 +18,18 @@ import java.util.List;
  * fileName       : PostMapperTest
  * author         : dotdot
  * date           : 2024-10-03
- * description    : CRUD 테스트
+ * description    : Mapper(CRUD) 테스트
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
  * 2024-10-03        dotdot       최초 생성
  */
 
-@SuppressWarnings("SpringJavaInjectionPointsAutowiringInspection")
 @SpringBootTest
 public class PostMapperTest {
 
     @Autowired
-    PostMapper postMapper; // PostMapper Bean을 클래스에 주입.
+     PostMapper postMapper; // PostMapper Bean을 클래스에 주입.
 
     @Test
     void save() { // 저장 

@@ -17,6 +17,7 @@ show tables;
 
 -- 테이블 조회
 select * from tb_post;
+delete from tb_post where  id = 3;
 desc tb_post;
 
 -- 데이터 삭제
