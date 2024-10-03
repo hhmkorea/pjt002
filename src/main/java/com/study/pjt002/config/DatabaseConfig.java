@@ -25,7 +25,6 @@ import javax.sql.DataSource;
  * -----------------------------------------------------------
  * 2024-10-03        dotdot       최초 생성
  */
-
 @Configuration
 @PropertySource("classpath:/application.properties")
 public class DatabaseConfig {
@@ -48,13 +47,20 @@ public class DatabaseConfig {
     public SqlSessionFactory sqlSessionFactory() throws Exception {
         SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
         factoryBean.setDataSource(dataSource());
-//		factoryBean.setMapperLocations(context.getResources("classpath:/mappers/**/*Mapper.xml"));
+        factoryBean.setMapperLocations(context.getResources("classpath:/mappers/**/*Mapper.xml"));
+        factoryBean.setConfiguration(mybatisConfig());
         return factoryBean.getObject();
     }
 
     @Bean
     public SqlSessionTemplate sqlSession() throws Exception {
         return new SqlSessionTemplate(sqlSessionFactory());
+    }
+
+    @Bean
+    @ConfigurationProperties(prefix = "mybatis.configuration")
+    public org.apache.ibatis.session.Configuration mybatisConfig() {
+        return new org.apache.ibatis.session.Configuration();
     }
 
 }
