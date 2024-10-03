@@ -14,7 +14,14 @@ show variables like 'c%';
 
 show databases ;
 show tables;
+
+-- 테이블 조회
 select * from tb_post;
+desc tb_post;
+
+-- 데이터 삭제
+truncate tb_post;
+
 /*
 CREATE TABLE `tb_post` (
                            `id`            bigint(20)    NOT NULL AUTO_INCREMENT COMMENT 'PK',

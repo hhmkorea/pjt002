@@ -19,7 +19,7 @@ import javax.sql.DataSource;
  * fileName       : DatabaseConfig
  * author         : dotdot
  * date           : 2024-10-03
- * description    :
+ * description    : 스프링에 properties에서 MyBatis 설정을 읽을 수 있도록 빈(Bean)을 선언해줌.
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
@@ -47,8 +47,8 @@ public class DatabaseConfig {
     public SqlSessionFactory sqlSessionFactory() throws Exception {
         SqlSessionFactoryBean factoryBean = new SqlSessionFactoryBean();
         factoryBean.setDataSource(dataSource());
-        factoryBean.setMapperLocations(context.getResources("classpath:/mappers/**/*Mapper.xml"));
-        factoryBean.setConfiguration(mybatisConfig());
+        factoryBean.setMapperLocations(context.getResources("classpath:/mappers/**/*Mapper.xml")); // Mapper 파일 경로.
+        factoryBean.setConfiguration(mybatisConfig()); // mybatisConfig() Bean을 이용하여 MyBatis 옵션을 설정.
         return factoryBean.getObject();
     }
 
@@ -59,6 +59,7 @@ public class DatabaseConfig {
 
     @Bean
     @ConfigurationProperties(prefix = "mybatis.configuration")
+    // application.properties에서 mybatis.configuration으로 시작하는 모든 설정을 읽어 스프링 컨테이너에 Bean으로 등록함.
     public org.apache.ibatis.session.Configuration mybatisConfig() {
         return new org.apache.ibatis.session.Configuration();
     }
