@@ -9,7 +9,7 @@ import java.util.List;
  * fileName       : PostMapper
  * author         : dotdot
  * date           : 2024-10-03
- * description    :
+ * description    : DB와의 통신(CRUD) 역할을 하는 Mapper 인터페이스.
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
