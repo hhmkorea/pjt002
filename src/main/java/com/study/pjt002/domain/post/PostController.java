@@ -36,7 +36,7 @@ public class PostController {
             PostResponse post = postService.findPostById(id);
             model.addAttribute("post", post);
         }
-        return "post/write"; // http://localhost:8080/post/write.do
+        return "post/write"; // src/main/resources/templates/post/write.html
     }
 
     // 신규 게시글 생성
@@ -52,5 +52,20 @@ public class PostController {
         List<PostResponse> posts = postService.findAllPost();
         model.addAttribute("posts", posts);
         return "post/list"; // src/main/resources/templates/post/list.html
+    }
+
+    // 게시글 상세 페이지
+    @GetMapping("/post/view.do")
+    public String openPostView(@RequestParam final Long id, Model model) {
+        PostResponse post = postService.findPostById(id);
+        model.addAttribute("post", post);
+        return "post/view"; // src/main/resources/templates/post/view.html
+    }
+
+    // 기존 게시글 수정
+    @PostMapping("/post/update.do")
+    public String updatePost(final PostRequest params) {
+        postService.updatePost(params);
+        return "redirect:/post/list.do";
     }
 }
