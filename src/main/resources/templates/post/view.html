@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="layout/basic"> <!-- /* decorate : 기본 레이아웃 적용(head.html, body.html) */ -->
+<html lang="ko" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layout/basic}"> <!-- /* decorate : 기본 레이아웃 적용(head.html, body.html) */ -->
     <th:block layout:fragment="title">
         <title>상세 페이지</title>
     </th:block>
@@ -44,10 +44,32 @@
                 </table>
                 <p class="btn_set">
                     <a th:href="@{/post/write.do( id=${post.id} )}" class="btns btn_bdr4 btn_mid">수정</a>
-                    <button type="button" class="btns btn_bdr1 btn_mid">삭제</button>
+                    <button type="button" onclick="deletePost();" class="btns btn_bdr1 btn_mid">삭제</button>
                     <a th:href="@{/post/list.do}" class="btns btn_bdr3 btn_mid">뒤로</a>
                 </p>
             </seletion>
         </div> <!-- /* .content */ -->
+    </th:block>
+    <th:block layout:fragment="script">
+        <script th:inline="javascript">
+            /*<![CDATA[*/
+
+            // 게시글 삭제
+            function deletePost() {
+                const id = [[ ${post.id} ]];
+
+                if ( !confirm(id + '번 게시글을 삭제할까요?') ) {
+                    return false;
+                }
+
+                const formHtml = `<form id="deleteForm" action="/post/delete.do" method="post"><input type="hidden" id="id" name="id" value="${id}" /> </form>`;  // deleteForm 정보 선언, hidden type의 id를 담음. ``안에 태그를 넣어야함!!
+                const doc = new DOMParser().parseFromString(formHtml, 'text/html'); // DOMParser().parseFromString() : String으로 그려진 HTML을 form element(Node)로 파싱해줌.
+                const form = doc.body.firstChild;   // doc에서 파싱된 Node를 꺼내오는 역할.
+                document.body.append(form); // HTML body에 위의 Node가 추가된 form을 이어붙임.
+                document.getElementById('deleteForm').submit(); // submit
+            }
+
+            /*]]>*/
+        </script>
     </th:block>
 </html>

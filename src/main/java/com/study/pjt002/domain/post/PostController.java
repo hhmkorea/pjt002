@@ -28,8 +28,6 @@ public class PostController {
 
     // 게시글 작성 페이지
     @GetMapping("/post/write.do")
-    // 과거 : @RequestMapping(value = "...", method = RequestMethod.XXX)
-    // 현재 : @xxxMapping("...")
     public String openPostWrite(@RequestParam(value = "id", required = false) final Long id, Model model) { // @RequestParam : HTML에서 보낸 파라매터 전달 받는데 사용
 
         if (id != null) {
@@ -66,6 +64,13 @@ public class PostController {
     @PostMapping("/post/update.do")
     public String updatePost(final PostRequest params) {
         postService.updatePost(params);
+        return "redirect:/post/list.do";
+    }
+
+    // 게시글 삭제
+    @PostMapping("/post/delete.do")
+    public String deletePost(@RequestParam final Long id) { // view.html의 deleteForm name="id" 값을 받아서 처리함.
+        postService.deletePost(id);
         return "redirect:/post/list.do";
     }
 }

@@ -10,6 +10,11 @@
 - 화면 디자인 : bootstrap
 - 기타 라이브러리 : lombok
 ####
+### Spring Boot ---------------------------
+1. Anotation 
+   - 과거 : @RequestMapping(value = "...", method = RequestMethod.XXX)
+   - 현재 : @xxxMapping("...")
+####
 ### MyBatis ---------------------------
 1. Mapper
    - Mapper(Java 인터페이스)와 XML Mapper(실제로 DB에 접근해서 호출할 SQL 쿼리를 작성(선언)하는 파일)를 통해 DB와 통신한다.
