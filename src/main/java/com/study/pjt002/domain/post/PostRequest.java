@@ -8,7 +8,7 @@ import lombok.Setter;
  * fileName       : PostRequest
  * author         : dotdot
  * date           : 2024-10-03
- * description    : 게시글 요청(등록/수정) 클래스
+ * description    : 게시글 요청(등록/수정) parameter를 담은 통(class)
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------

@@ -4,13 +4,15 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 /**
  * packageName    : com.study.pjt002.domain.post
  * fileName       : PostController
  * author         : dotdot
  * date           : 2024-10-04
- * description    :
+ * description    : 서비스 호출하고 그에 대한 실행 결과 전달
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
@@ -26,14 +28,19 @@ public class PostController {
     @GetMapping("/post/write.do")
     // 과거 : @RequestMapping(value = "...", method = RequestMethod.XXX)
     // 현재 : @xxxMapping("...")
-    public String openPostWrite(Model model) {
-        String title = "제목",
-                content = "내용",
-                writer = "홍길동";
+    public String openPostWrite(@RequestParam(value = "id", required = false) final Long id, Model model) { // @RequestParam : HTML에서 보낸 파라매터 전달 받는데 사용
 
-        model.addAttribute("t", title);
-        model.addAttribute("e", content);
-        model.addAttribute("w", writer);
-        return "post/write"; // HTML 파일 경로 선언, http://localhost:8080/post/write.do
+        if (id != null) {
+            PostResponse post = postService.findPostById(id);
+            model.addAttribute("post", post);
+        }
+        return "post/write"; // http://localhost:8080/post/write.do
+    }
+
+    // 신규 게시글 생성
+    @PostMapping("/post/save.do")
+    public String savePost(final PostRequest params) { // PostRequest : 등록 요청 데이터를 담은 통(class).
+        postService.savePost(params);
+        return "redirect:/post/list.do";
     }
 }

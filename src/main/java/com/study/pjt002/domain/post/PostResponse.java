@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
  * fileName       : PostResponse
  * author         : dotdot
  * date           : 2024-10-03
- * description    : 게시글 응답(조회) 클래스, 사용자에게 보여줄 데이터 처리.
+ * description    : 게시글 응답(조회) 클래스, 사용자에게 보여줄 parameter를 담은 통(class)
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
