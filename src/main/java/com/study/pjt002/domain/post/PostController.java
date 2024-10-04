@@ -27,6 +27,13 @@ public class PostController {
     // 과거 : @RequestMapping(value = "...", method = RequestMethod.XXX)
     // 현재 : @xxxMapping("...")
     public String openPostWrite(Model model) {
+        String title = "제목",
+                content = "내용",
+                writer = "홍길동";
+
+        model.addAttribute("t", title);
+        model.addAttribute("e", content);
+        model.addAttribute("w", writer);
         return "post/write"; // HTML 파일 경로 선언, http://localhost:8080/post/write.do
     }
 }
