@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="true">
+
+    <!-- Appenders -->
+    <appender name="console" class="ch.qos.logback.core.ConsoleAppender"> <!-- /* appender: 전달받은 로그 출력 위치 */ -->
+        <encoder>
+            <charset>UTF-8</charset>
+            <Pattern>%d %5p [%c] %m%n</Pattern>
+        </encoder>
+    </appender>
+
+    <appender name="console-infolog" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <charset>UTF-8</charset>
+            <Pattern>%d %5p %m%n</Pattern>
+        </encoder>
+    </appender>
+
+    <!-- Logger -->
+    <logger name="com.study.pjt002" level="DEBUG" appender-ref="console" />
+    <logger name="jdbc.sqlonly" level="INFO" appender-ref="console-infolog" />  <!-- /* sqlonly: SQL 로그 남기 ps와 관련된 파라미터 자동으로 변경되어 출력 */ -->
+    <logger name="jdbc.resultsettable" level="INFO" appender-ref="console-infolog" />  <!-- /* resultsettable: SQL 조회결과 테이블 형태로 출력 */ -->
+
+    <!-- Root Logger -->
+    <root level="off">
+        <appender-ref ref="console" />
+    </root>
+</configuration>
