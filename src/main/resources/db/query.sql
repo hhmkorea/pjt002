@@ -23,6 +23,11 @@ desc tb_post;
 -- 데이터 삭제
 truncate tb_post;
 
+-- 데이터 자가 복제(PostServiceTest.java 에서 1000건 추가 후 saveByForeach() 실행하면 2000건)
+INSERT INTO tb_post (title, content, writer, view_cnt, notice_yn, delete_yn)
+    (SELECT title, content, writer, view_cnt, notice_yn, delete_yn FROM tb_post WHERE delete_yn = 0);
+
+select count(*) from tb_post;
 /*
 CREATE TABLE `tb_post` (
                            `id`            bigint(20)    NOT NULL AUTO_INCREMENT COMMENT 'PK',

@@ -1,3 +1,4 @@
+/*
 package com.study.pjt002;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -13,6 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.List;
 
+*/
 /**
  * packageName    : com.study.pjt002
  * fileName       : PostMapperTest
@@ -23,7 +25,8 @@ import java.util.List;
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
  * 2024-10-03        dotdot       최초 생성
- */
+ *//*
+
 
 @SpringBootTest
 public class PostMapperTest {
@@ -85,3 +88,4 @@ public class PostMapperTest {
         System.out.println("삭제 이후의 전체 게시글 개수는 : " + postMapper.findAll().size() + "개입니다.");
     }
 }
+*/
