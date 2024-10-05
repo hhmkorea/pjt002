@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
  * fileName       : LoggerInterceptor
  * author         : dotdot
  * date           : 2024-10-05
- * description    : URI 접근하는 과정에서 무언가를 제어하는 기능
+ * description    : Controller의 URI 접근하는 과정 중 제어하는 기능
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------

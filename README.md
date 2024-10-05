@@ -38,6 +38,14 @@
    - 브라우저 상단의 주소창(URL)에서 ("/post/view.do?id=1") 이와 같이 ' ? ' 뒤에 id(게시글 번호)가 파라미터로 연결되어 있는데 여기서 parameter가 "key=value" 형태(구조)의 문자열로 이루어진 것.
    - 첫 번째 파라미터는 ' ? '로 시작하고, 두 번째 파라미터부터는 ' & '로 구분
    - 쿼리 스트링으로 연결된 URI는 HTTP 요청 메서드 중 GET 방식임을 의미.
+2. AOP(Aspect Oriented Programming)
+   - 관점 지향 프로그래밍
+   - 객체 지향 프로그래밍(OOP)을 더욱 OOP답게 사용할 수 있도록 도와주는 역할을 함.
+
+   ###### 1) Around
+   > @Around("execution(....)")
+   - @Around : Advice 중 하나. Target 메서드 이전과 이후 모두 호출 제어.
+   - execuution() : 포인트컷을 지정하는 문법.
 ###
 ### ※ 소스 출처 및 참고 자료
 > https://congsong.tistory.com/12
