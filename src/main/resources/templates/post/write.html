@@ -46,7 +46,7 @@
                 </form>
                 <p class="btn_set">
                     <button type="button" id="saveBtn" onclick="savePost();" class="btns btn_st3 btn_mid">저장</button>
-                    <a th:href="@{/post/list.do}" class="btns btn_bdr3 btn_mid">뒤로</a>
+                    <button type="button" onclick="goListPage();" class="btns btn_bdr3 btn_mid">뒤로</button>
                 </p>
             </seletion>
         </div> <!-- /* .content */ -->
@@ -95,10 +95,24 @@
                     isValid(fields[i], fieldNames[i]) // isValid() : 유효성검사, 값이 입력되지 않은 필드 탐색 -- body.html 하단의 function.js에 선언된 함수.
                 }
 
+                new URLSearchParams(location.search).forEach((value, key) => { // location.search : URL 물음표 뒤에 있는 파라미터들을 가져옴.
+                    const input = document.createElement('input');
+                    input.type = 'hidden';
+                    input.name = key;
+                    input.value = value;
+                    form.append(input); // input 요소를 만들어 이전 페이지 정보 받아둠.
+                })
+
                 document.getElementById('saveBtn').disabled = true; // 데이터 중복 방지를 위해 저장버튼 비활성화.
                 form.noticeYn.value = form.isNotice.checked; // 공지글 여부 값 세팅.
                 form.action = [[ ${post == null} ]] ? '/post/save.do' : '/post/update.do'; // form을 action에 지정된 URI(컨트롤러의 메서드)로 폼 데이터(parameter)를 전달.
                 form.submit(); // 폼 데이터(parameter)를 서버(controller)로 전달.
+            }
+
+            // 게시글 리스트 페이지로 이동
+            function goListPage() {
+                const queryString = new URLSearchParams(location.search); // URLSearchParams : 쿼리 스트링을 객체화
+                location.href = '/post/list.do' + '?' + queryString.toString();
             }
 
             /*]]>*/
