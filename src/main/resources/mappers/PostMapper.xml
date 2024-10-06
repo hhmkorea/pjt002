@@ -25,17 +25,17 @@
     <insert id="save" parameterType="com.study.pjt002.domain.post.PostRequest" useGeneratedKeys="true" keyProperty="id">
         <!-- useGeneratedKeys : auto_increment된 id 객체 자동으로 담아줌.-->
         INSERT INTO tb_post (
-        <include refid="postColumns" />
+            <include refid="postColumns" />
         ) VALUES (
-        #{id}
-        , #{title}
-        , #{content}
-        , #{writer}
-        , 0
-        , #{noticeYn}
-        , 0
-        , NOW()
-        , NULL
+            #{id}
+            , #{title}
+            , #{content}
+            , #{writer}
+            , 0
+            , #{noticeYn}
+            , 0
+            , NOW()
+            , NULL
         )
     </insert>
 
@@ -43,11 +43,11 @@
     <!-- 게시글 상세정보 조회 -->
     <select id="findById" parameterType="long" resultType="com.study.pjt002.domain.post.PostResponse">
         SELECT
-        <include refid="postColumns" />
+            <include refid="postColumns" />
         FROM
-        tb_post
+            tb_post
         WHERE
-        id = #{value}
+            id = #{value}
     </select>
 
 
@@ -55,13 +55,13 @@
     <update id="update" parameterType="com.study.pjt002.domain.post.PostRequest">
         UPDATE tb_post
         SET
-        modified_date = NOW()
-        , title = #{title}
-        , content = #{content}
-        , writer = #{writer}
-        , notice_yn = #{noticeYn}
+            modified_date = NOW()
+            , title = #{title}
+            , content = #{content}
+            , writer = #{writer}
+            , notice_yn = #{noticeYn}
         WHERE
-        id = #{id}
+            id = #{id}
     </update>
 
 
@@ -69,9 +69,9 @@
     <delete id="deleteById" parameterType="long">
         UPDATE tb_post
         SET
-        delete_yn = 1
+            delete_yn = 1
         WHERE
-        id = #{id}
+            id = #{id}
     </delete>
 
 
@@ -83,6 +83,7 @@
             tb_post
         WHERE
             delete_yn = 0
+            <include refid="search"></include>
         ORDER BY
             id DESC
         LIMIT #{pagination.limitStart}, #{recordSize}
@@ -96,5 +97,40 @@
             tb_post
         WHERE
             delete_yn = 0
+            <include refid="search"></include>
     </select>
+
+    <!-- 게시글 검색 -->
+    <sql id="search">
+        <!-- 검색 키워드가 있을 때 -->
+        <if test="keyword != null and keyword != ''">
+            <choose>
+                <!-- 검색 유형이 있을 때 -->
+                <when test="searchType != null and searchType != ''">
+                    <choose>
+                        <when test="'title'.equals( searchType )">
+                            AND title LIKE CONCAT('%', #{keyword}, '%')
+                        </when>
+                        <when test="'content'.equals( searchType )">
+                            AND content LIKE CONCAT('%', #{keyword}, '%')
+                        </when>
+                        <when test="'writer'.equals( searchType )">
+                            AND writer LIKE CONCAT('%', #{keyword}, '%')
+                        </when>
+                    </choose>
+                </when>
+            </choose>
+
+            <choose>
+                <!-- 전체 검색일 때 -->
+                <otherwise>
+                    AND (
+                            title LIKE CONCAT('%', #{keyword}, '%')
+                        OR content LIKE CONCAT('%', #{keyword}, '%')
+                        OR writer LIKE CONCAT('%', #{keyword}, '%')
+                    )
+                </otherwise>
+            </choose>
+        </if>
+    </sql>
 </mapper>

@@ -43,9 +43,9 @@
                     </tbody>
                 </table>
                 <p class="btn_set">
-                    <a th:href="@{/post/write.do( id=${post.id} )}" class="btns btn_bdr4 btn_mid">수정</a>
+                    <button type="button" onclick="goWritePage();" class="btns btn_bdr4 btn_mid">수정</button>
                     <button type="button" onclick="deletePost();" class="btns btn_bdr1 btn_mid">삭제</button>
-                    <a th:href="@{/post/list.do}" class="btns btn_bdr3 btn_mid">뒤로</a>
+                    <button type="button" onclick="goListPage();" class="btns btn_bdr3 btn_mid">뒤로</button>
                 </p>
             </seletion>
         </div> <!-- /* .content */ -->
@@ -62,11 +62,28 @@
                     return false;
                 }
 
+                let inputHtml = '';
+
+                new URLSearchParams(location.search).forEach((value, key) => { // location.search : URL 물음표 뒤에 있는 파라미터들을 가져옴.
+                    inputHtml += `<input type="hidden" name="${key}" value="${value}" />`; // 전달받은 쿼리 스트링 parameter 전부 inputHtml에 담아 폼에 추가하는 구조. 이전 페이지 정보 받아둠.
+                })
+
                 const formHtml = `<form id="deleteForm" action="/post/delete.do" method="post"><input type="hidden" id="id" name="id" value="${id}" /> </form>`;  // deleteForm 정보 선언, hidden type의 id를 담음. ``안에 태그를 넣어야함!!
                 const doc = new DOMParser().parseFromString(formHtml, 'text/html'); // DOMParser().parseFromString() : String으로 그려진 HTML을 form element(Node)로 파싱해줌.
                 const form = doc.body.firstChild;   // doc에서 파싱된 Node를 꺼내오는 역할.
                 document.body.append(form); // HTML body에 위의 Node가 추가된 form을 이어붙임.
                 document.getElementById('deleteForm').submit(); // submit
+            }
+
+            // 게시글 수정 페이지로 이동
+            function goWritePage() {
+                location.href = '/post/write.do' + location.search
+            }
+
+            // 게시글 리스트 페이지로 이동
+            function goListPage() {
+                const queryString = new URLSearchParams(location.search); // URLSearchParams : 쿼리 스트링을 객체화
+                location.href = '/post/list.do' + '?' + queryString.toString();
             }
 
             /*]]>*/
