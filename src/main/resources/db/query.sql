@@ -28,6 +28,27 @@ INSERT INTO tb_post (title, content, writer, view_cnt, notice_yn, delete_yn)
     (SELECT title, content, writer, view_cnt, notice_yn, delete_yn FROM tb_post WHERE delete_yn = 0);
 
 select count(*) from tb_post;
+
+
+select
+id
+        , title
+        , content
+        , writer
+        , view_cnt
+        , notice_yn
+        , delete_yn
+        , created_date
+        , modified_date
+
+        FROM
+            tb_post
+        WHERE
+            delete_yn = 0
+        ORDER BY
+            id DESC
+    LIMIT 0, 10
+    ;
 /*
 CREATE TABLE `tb_post` (
                            `id`            bigint(20)    NOT NULL AUTO_INCREMENT COMMENT 'PK',

@@ -1,6 +1,7 @@
 package com.study.pjt002.common.paging;
 
 import com.study.pjt002.common.dto.SearchDto;
+import lombok.Getter;
 
 /**
  * packageName    : com.study.pjt002.common.paging
@@ -13,6 +14,8 @@ import com.study.pjt002.common.dto.SearchDto;
  * -----------------------------------------------------------
  * 2024-10-05        dotdot       최초 생성
  */
+
+@Getter
 public class Pagination {
 
     private int totalRecordCount;     // 전체 데이터 수
@@ -24,8 +27,10 @@ public class Pagination {
     private boolean existNextPage;    // 다음 페이지 존재 여부
 
     public Pagination(int totalRecordCount, SearchDto params) {
-        this.totalRecordCount = totalRecordCount;
-        calculation(params);
+        if (totalRecordCount > 0) {
+            this.totalRecordCount = totalRecordCount;
+            calculation(params);
+        }
     }
 
     private void calculation(SearchDto params) { // 게시글 데이터가 있는 경우에만 실행되는 로직
@@ -44,7 +49,7 @@ public class Pagination {
         // 끝 페이지 번호 계산
         endPage = startPage + params.getPageSize() - 1;
 
-        // 끝 페이지가 전체 페이지 수보다 큰 경우, 끝 페이지 전체 페이지 수 저장.
+        // 끝 페이지가 전체 페이지 수보다 큰 경우, 끝 페이지 전체 페이지 수 저장
         if (endPage > totalPageCount) {
             endPage = totalPageCount;
         }
@@ -53,7 +58,7 @@ public class Pagination {
         limitStart = (params.getPage() - 1) * params.getRecordSize();
 
         // 이전 페이지 존재 여부 확인
-        existPrevPage = startPage !=1;
+        existPrevPage = startPage != 1;
 
         // 다음 페이지 존재 여부 확인
         existNextPage = (endPage * params.getRecordSize()) < totalRecordCount;
