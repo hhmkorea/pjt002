@@ -72,7 +72,7 @@
             /*<![CDATA[*/
 
             window.onload = () => { // 페이지가 로드되었을 때, 딱 한 번만 함수를 실행
-                setQueryStringParams();
+                setQueryStringParams(); // 검색 정보 저장.
                 findAllPost();
             }
 
@@ -121,7 +121,7 @@
                             <tr>
                                 <td><input type="checkbox" /></td>
                                 <td>${row.noticeYn === false ? num-- : '공지'}</td>
-                                <td class="tl"><a href="javascript:void(0);" onclick="goViewPage(${row.id});">${row.title}</a></td> <!-- javascript: void(0) : a href 속성 무효화 -->
+                                <td class="tl"><a href="javascript:void(0);" onclick="goViewPage(${row.id});">${row.title}</a></td> <!-- javascript: void(0) : a href 속성 무효화-->
                                 <td>${row.writer}</td>
                                 <td>${dayjs(row.createdDate).format('YYYY-MM-DD HH:mm')}</td>
                                 <td>${row.viewCnt}</td>

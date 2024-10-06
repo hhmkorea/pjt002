@@ -27,7 +27,7 @@ public class SearchDto {
     private String searchType;      // 검색 유형
     private Pagination pagination;  // 페이지네이션 정보
 
-    private SearchDto() {       // 생성자, Constructor
+    public SearchDto() {       // 생성자, Constructor
         this.page = 1;          // 초기 1 페이지
         this.recordSize = 10;   // 출력할 row 10개 
         this.pageSize = 10;     // 최대 10 페이지 
