@@ -51,15 +51,19 @@
    - 디바이스 종류에 상관없이 공통으로 데이터를 처리할 수 있도록 하는 방식.
    - REST API 참고자료 : https://meetup.nhncloud.com/posts/92
       ##### 1) REST API 전송 방식
-      ###### - FORM 전송
+      ###### - HTML form
       ###### : @Getter, @Setter 이용, 요청 클래스의 각 멤버 변수는 HTML form 태그에 선언된 name 값을 기준으로 파라매터 전송.
       ###### - REST API
-      ###### : JSON 형태(key-value 구조)로 데이터를 처리하므로 @Setter는 필요없음.
-   
+      ###### : JSON 형태(key-value 구조)로 데이터를 처리하므로 @Setter는 필요없음. 
       ##### 2) REST API 테스트 
       ###### -> @Controller, @ResponseBody : HTML이 아닌 리턴 타입에 해당하는 데이터 자체 리턴
       ###### -> @RestController : 클래스 레벨에서 선언, 자동으로 @ResponseBody가 적용.
       ###### -> @PathVariable : URI에서 템플릿 형태로 parameter를 받을 수 있음. 
-      ###### -> @RequestBody : 데이터 생성 or 수정하는 경우 사용, 저장할 데이터를 JSON 포맷형태로 서버에 요청 보내면, key-value 구조로 이루어진 각각의 데이터가 Java 객체와 mapping 됨.
+      ###### -> @RequestBody : 데이터 생성 or 수정하는 경우 사용, 저장할 데이터를 <font color='green'>JSON 포맷형태로 서버에 요청</font> 보내면, key-value 구조로 이루어진 각각의 데이터가 Java 객체와 mapping 됨.
+
+      #### 3) 동기와 비동기
+      ##### - 동기 처리 : 컨트롤러에서 데이터와 화면 두가지를 동시에 처리 
+      ##### - 비동기 처리 : 화면 내에서 데이터의 처리(CRUD 등)를 실시간으로 서버에 요청. 페이지를 로딩하지 않고, <font color='orange'>Ajax를 이용해 실시간으로 서버와 데이터 주고 받음.</font>
+
 ##
 ### ※ 소스 출처 및 참고 자료 : https://congsong.tistory.com/12
