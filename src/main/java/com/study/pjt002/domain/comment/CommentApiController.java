@@ -32,7 +32,9 @@ public class CommentApiController {
 
     // 댓글 리스트 조회
     @GetMapping("/posts/{postId}/comments")
-    public List<CommentResponse> findAllComent(@PathVariable final Long postId) {
+    public List<CommentResponse> findAllComment(@PathVariable final Long postId) {
         return commentService.findAllComment(postId);
     }
+
+    // 댓글 상세정보 조회
 }
