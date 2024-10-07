@@ -18,8 +18,6 @@ import lombok.NoArgsConstructor;
 
 @Getter // Lombok이 제공해주는 기능, 클래스의 모든 멤버 변수에 대한 get() 메서드를 만들어줌.
 //@Setter
-// FORM 전송 : @Getter, @Setter 이용, 요청 클래스의 각 멤버 변수는 HTML form 태그에 선언된 name 값을 기준으로 파라매터 전송.
-// REST API : JSON 형태(key-value 구조)로 데이터를 처리하므로 @Setter는 필요없음.
 @NoArgsConstructor(access = AccessLevel.PROTECTED) // 클래스의 기본 생성자를 만들어줌.
 public class CommentRequest {
 
