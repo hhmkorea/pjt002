@@ -14,41 +14,45 @@ show variables like 'c%';
 
 show databases ;
 show tables;
+# tb_comment
+# tb_post
+
 
 -- 테이블 조회
-select * from tb_post;
-delete from tb_post where  id = 3;
-desc tb_post;
-
+select count(*) from tb_comment;
+select * from tb_comment;
+delete from tb_comment where  id = 3;
 -- 데이터 삭제
-truncate tb_post;
+-- truncate tb_comment;
+-- 테이블 구조확인
+show full columns from tb_comment;
+desc tb_comment;
+-- 제약 조건 조회
+SELECT * FROM information_schema.TABLE_CONSTRAINTS
+WHERE TABLE_NAME = 'tb_comment'
+;
 
 -- 데이터 자가 복제(PostServiceTest.java 에서 1000건 추가 후 saveByForeach() 실행하면 2000건)
-INSERT INTO tb_post (title, content, writer, view_cnt, notice_yn, delete_yn)
-    (SELECT title, content, writer, view_cnt, notice_yn, delete_yn FROM tb_post WHERE delete_yn = 0);
+# INSERT INTO tb_post (title, content, writer, view_cnt, notice_yn, delete_yn)
+#     (SELECT title, content, writer, view_cnt, notice_yn, delete_yn FROM tb_post WHERE delete_yn = 0);
 
-select count(*) from tb_post;
+-- 테이블 생성(tb_comment)
+/*
+create table tb_comment (
+                            id bigint not null auto_increment comment '댓글 번호 (PK)'
+                            , post_id bigint not null comment '게시글 번호 (FK)'
+                            , content varchar(1000) not null comment '내용'
+                            , writer varchar(20) not null comment '작성자'
+                            , delete_yn tinyint(1) not null comment '삭제 여부'
+                            , created_date datetime not null default CURRENT_TIMESTAMP comment '생성일시'
+                            , modified_date datetime comment '최종 수정일시'
+                            , primary key(id)
+) comment '댓글';
+*/
+-- 제약조건 추가(tb_comment)
+-- alter table tb_comment add constraint fk_post_comment foreign key(post_id) references tb_post(id);
 
-
-select
-id
-        , title
-        , content
-        , writer
-        , view_cnt
-        , notice_yn
-        , delete_yn
-        , created_date
-        , modified_date
-
-        FROM
-            tb_post
-        WHERE
-            delete_yn = 0
-        ORDER BY
-            id DESC
-    LIMIT 0, 10
-    ;
+-- 테이블 생성(tb_post)
 /*
 CREATE TABLE `tb_post` (
                            `id`            bigint(20)    NOT NULL AUTO_INCREMENT COMMENT 'PK',

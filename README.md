@@ -11,7 +11,7 @@
 - 기타 라이브러리 : lombok
 ####
 ### Spring Boot ---------------------------
-1. Anotation 
+1. Anotation 문법 
    - 과거 : @RequestMapping(value = "...", method = RequestMethod.XXX)
    - 현재 : @xxxMapping("...")
 ####

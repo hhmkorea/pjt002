@@ -7,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 
@@ -27,7 +26,7 @@ import java.util.List;
 @RequiredArgsConstructor // 클래스 내에 final로 선언된 모든 멤버에 대한 생성자를 만들어줌.
 public class PostService {
 
-    private final PostMapper postMapper;
+    private final PostMapper postMapper;    // Mapper
 
     /**
      * 게시글 저장
