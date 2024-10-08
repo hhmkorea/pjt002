@@ -33,7 +33,4 @@ public class SearchDto {
         this.pageSize = 10;     // 최대 10 페이지 
     }
 
-//    private int getOffset() {   //
-//        return (page - 1) * recordSize;
-//    }
 }

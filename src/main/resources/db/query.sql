@@ -31,6 +31,7 @@ desc tb_comment;
 SELECT * FROM information_schema.TABLE_CONSTRAINTS
 WHERE TABLE_NAME = 'tb_comment'
 ;
+SELECT COUNT(*) FROM tb_comment WHERE delete_yn = 0 AND post_id = '18343';
 
 -- 데이터 자가 복제(PostServiceTest.java 에서 1000건 추가 후 saveByForeach() 실행하면 2000건)
 # INSERT INTO tb_post (title, content, writer, view_cnt, notice_yn, delete_yn)

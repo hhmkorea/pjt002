@@ -49,13 +49,13 @@ public interface CommentMapper {
      * @param postId - 게시글 번호 (FK)
      * @return 댓글 리스트
      */
-    List<CommentResponse> findAll(Long postId);
+    List<CommentResponse> findAll(CommentSearchDto params);
 
     /**
      * 댓글 수 카운팅
      * @param postId - 게시글 번호 (FK)
      * @return 댓글 수
      */
-    int count(Long postId);
+    int count(CommentSearchDto params);
 
 }
