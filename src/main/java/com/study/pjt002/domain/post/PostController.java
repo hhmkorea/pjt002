@@ -9,9 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.Objects;
 
 /**
  * packageName    : com.study.pjt002.domain.post
@@ -30,7 +28,7 @@ public class PostController {
 
     private final PostService postService;
 
-    // 사용장게 메시지를 전달하고, 페이지를 redirect 한다.
+    // 사용자에게 메시지를 전달하고, 페이지를 redirect 한다.
     private String showMessageAndRedirect(final MessageDto params, Model model) {
         model.addAttribute("params", params);
         return "common/messageRedirect";
@@ -69,11 +67,6 @@ public class PostController {
     // 게시글 리스트 페이지
     @GetMapping("/post/list.do")
     public String openPostList(@ModelAttribute("params") final SearchDto params, Model model) {
-        // @ModelAttribute : parameter로 수집한 객체를 자동으로 뷰(HTML)까지 전달할 수 있음.
-        // params : 뷰에서 상용할 별칭. "${param.page}"
-
-        //List<PostResponse> posts = postService.findAllPost(params);
-        //model.addAttribute("posts", posts);
         PagingResponse<PostResponse> response = postService.findAllPost(params);
         model.addAttribute("response", response);
         return "post/list"; // src/main/resources/templates/post/list.html
