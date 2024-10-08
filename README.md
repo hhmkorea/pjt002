@@ -27,10 +27,16 @@
    - 자바에서 변수명은 소문자로 시작하고, 구분되는 단어의 앞 글자만 대문자로 처리하는 "카멜 케이스" 사용
 ##
 ### Themeleaf ---------------------------
-#### 1. javascript 구현 방식
+#### 1. Themeleaf vs JSP
+   - JSP : Servlet 이라는 형태로 변환되어 실행, Servlet이 자바 소스이다 보니 HTML 코드에서 JAVA 코드를 넣어 동적 웹페이지를 구성
+   - Thymeleaf : HTML, JS, CSS 등을 처리할 수 있는 웹 및 독립형 환경에서 사용이 가능한 java 템플릿 엔진.
+     > 서블릿으로 변환되지 않기 때문에 비즈니스 로직이 완전히 분리된다.
+     
+     > Thymeleaf 템플릿 엔진의 장점은 페이지를 생성하는데 필요한 정보를 태그의 속성으로 넣을 수 있어 유지보수가 간단하다.
+#### 2. javascript 구현 방식
    - '<', '>' 태그를 엄격하게 검사하기 때문에 자바스크립트 코드는 꼭 CDATA로 묶어줘야 함.
    - CDATA는 특수문자를 전부 문자열로 치환(replace)할 때 사용.
-#### 2. parameter 연결 방식 
+#### 3. parameter 연결 방식 
    - 일반적인 GET 파라미터 연결 방식 -▶ /post/view.do?idx=${idx}&page=${page}
    - 타임리프 GET 파라미터 연결 방식 -▶ /post/view.do( idx=${idx}, page=${page} )
 ####
