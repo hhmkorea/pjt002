@@ -20,12 +20,12 @@ show tables;
 
 -- 테이블 조회
 select count(*) from tb_comment;
-select * from tb_comment;
+select * from tb_member;
 delete from tb_comment where  id = 3;
 -- 데이터 삭제
 -- truncate tb_comment;
 -- 테이블 구조확인
-show full columns from tb_comment;
+show full columns from tb_member;
 desc tb_comment;
 -- 제약 조건 조회
 SELECT * FROM information_schema.TABLE_CONSTRAINTS
@@ -68,3 +68,18 @@ CREATE TABLE `tb_post` (
                            PRIMARY KEY (`id`)
 ) COMMENT '게시글';*/
 
+-- 테이블 생성(tb_member)
+/*
+CREATE TABLE `tb_member` (
+                             `id` bigint(20) NOT NULL AUTO_INCREMENT COMMENT '회원 번호 (PK)',
+                             `login_id` varchar(20) NOT NULL COMMENT '로그인 ID',
+                             `password` varchar(60) NOT NULL COMMENT '비밀번호',
+                             `name` varchar(20) NOT NULL COMMENT '이름',
+                             `gender` enum('M','F') NOT NULL COMMENT '성별',
+                             `birthday` date NOT NULL comment '생년월일',
+                             `delete_yn` tinyint(1) NOT NULL COMMENT '삭제 여부',
+                             `created_date` datetime NOT NULL DEFAULT current_timestamp() COMMENT '생성일시',
+                             `modified_date` datetime DEFAULT NULL COMMENT '최종 수정일시',
+                             PRIMARY KEY (`id`),
+                             UNIQUE KEY uix_member_login_id (`login_id`)
+) COMMENT '회원';*/

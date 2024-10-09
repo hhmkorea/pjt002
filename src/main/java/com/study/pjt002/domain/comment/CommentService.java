@@ -71,7 +71,7 @@ public class CommentService {
 
     /**
      * 댓글 리스트 조회
-     * @param postId - 게시글 번호 (FK)
+     * @param params - 게시글 번호 (FK)
      * @return 특정 게시글에 등록된 댓글 리스트
      */
     public PagingResponse<CommentResponse> findAllComment(final CommentSearchDto params) {
