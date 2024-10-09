@@ -45,7 +45,7 @@
                 <p class="btn_set">
                     <button type="button" onclick="goWritePage();" class="btns btn_bdr4 btn_mid">수정</button>
                     <button type="button" onclick="deletePost();" class="btns btn_bdr1 btn_mid">삭제</button>
-                    <button type="button" onclick="goListPage();" class="btns btn_bdr3 btn_mid">리스트로</button>
+                    <button type="button" onclick="goListPage();" class="btns btn_bdr3 btn_mid">목록으로</button>
                 </p>
                 <!-- /* 댓글 작성 */ -->
                 <div class="cm_write">
@@ -170,8 +170,13 @@
             // 전체 댓글 조회
             function findAllComment(page) { // postId 기준으로 특정 게시글에 등록된 전체 댓글을 조회.
 
-                const currentPage = document.querySelector('.paging a.on');
-                page = (page) ? page : (currentPage ? Number(currentPage.text) : 1);
+                // 변경전 : pagination에서 활성화(on)된 페이지 번호(currentPage) 기준으로 page 셋팅
+                // const currentPage = document.querySelector('.paging a.on');
+                // page = (page) ? page : (currentPage ? Number(currentPage.text) : 1);
+
+                // 변경 후 : 쿼리 스트링(URL에서 &로 연결된 parameter)에서 의 페이지 번호를 기준으로 page 셋팅
+                const uriPage = new URLSearchParams(location.search).get('page');
+                page = (page) ? page : (uriPage ? Number(uriPage) : 1);
 
                 const postId = [[ ${post.id}]];
                 const uri = `/posts/${postId}/comments`;
@@ -317,6 +322,10 @@
                 const currentPage = Array.from(paging.querySelectorAll('a')).find(a => (Number(a.text) === page || Number(a.text) === pagination.totalPageCount));
                 currentPage.classList.add('on');
                 currentPage.removeAttribute('onclick');
+
+                // 8. 페이지 URI 강제 변경
+                const postId = new URLSearchParams(location.search).get('id');
+                history.replaceState({}, '', location.pathname + `?id=${postId}&page=${currentPage.text}`); // replaceState() : 강제로 URI를 변경해 Ajax 페이징의 새로고침 문제 해결.
             }
 
             /*]]>*/
