@@ -72,7 +72,7 @@
             tb_comment
         WHERE
             delete_yn = 0
-            AND post_id = #{value}
+            AND post_id = #{postId}
         ORDER BY
             id DESC
         LIMIT #{pagination.limitStart}, #{recordSize}
