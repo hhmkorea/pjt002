@@ -1,5 +1,7 @@
 package com.study.pjt002.domain.member;
 
+import org.apache.ibatis.annotations.Mapper;
+
 /**
  * packageName    : com.study.pjt002.domain.member
  * fileName       : MemberMapper
@@ -11,6 +13,7 @@ package com.study.pjt002.domain.member;
  * -----------------------------------------------------------
  * 2024-10-09        dotdot       최초 생성
  */
+@Mapper
 public interface MemberMapper {
 
     /**

@@ -21,7 +21,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class SecurityConfig {
 
     @Bean
-    public PasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() { // passwordEncoder() : 복호화가 불가능한 단방향 Hash 알고리즘을 제공해주는 interface
         return new BCryptPasswordEncoder();
     }
 

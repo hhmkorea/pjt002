@@ -19,7 +19,7 @@ show tables;
 
 
 -- 테이블 조회
-select count(*) from tb_comment;
+select count(*) from tb_member;
 select * from tb_member;
 delete from tb_comment where  id = 3;
 -- 데이터 삭제
