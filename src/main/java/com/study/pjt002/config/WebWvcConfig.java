@@ -1,6 +1,7 @@
 package com.study.pjt002.config;
 
 import com.study.pjt002.interceptor.LoggerInterceptor;
+import com.study.pjt002.interceptor.LoginCheckInterceptor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -22,7 +23,11 @@ public class WebWvcConfig implements WebMvcConfigurer { // WebMvcConfigurer : @E
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(new LoggerInterceptor())
+        registry.addInterceptor(new LoggerInterceptor()) // 로그용 인터셉터 구현 
                 .excludePathPatterns("/css/**", "/images/**", "/js/**");
+
+        registry.addInterceptor(new LoginCheckInterceptor()) // 모든 URI 접근할때 preHandle() 작동
+                .addPathPatterns("/**/*.do")
+                .excludePathPatterns("/log*");
     }
 }
