@@ -2,13 +2,17 @@ package com.study.pjt002.domain.post;
 
 import com.study.pjt002.common.dto.MessageDto;
 import com.study.pjt002.common.dto.SearchDto;
+import com.study.pjt002.common.file.FileUtils;
 import com.study.pjt002.common.paging.PagingResponse;
+import com.study.pjt002.domain.file.FileRequest;
+import com.study.pjt002.domain.file.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -27,6 +31,8 @@ import java.util.Map;
 public class PostController {
 
     private final PostService postService;
+    private final FileService fileService; // 파일 업로드 서비스
+    private final FileUtils fileUtils; // 파일 업로드 유틸
 
     // 사용자에게 메시지를 전달하고, 페이지를 redirect 한다.
     private String showMessageAndRedirect(final MessageDto params, Model model) {
@@ -58,8 +64,10 @@ public class PostController {
 
     // 신규 게시글 생성
     @PostMapping("/post/save.do")
-    public String savePost(final PostRequest params, Model model) { // PostRequest : 등록 요청 데이터를 담은 통(class).
-        postService.savePost(params);
+    public String savePost(final PostRequest params, Model model) { // PostRequest : 게시글(+첨부파일) 등록 요청 데이터를 담은 통(class).
+        Long id = postService.savePost(params); // 1. 게시글 저장 성공 후 게시글 id 받아둠.
+        List<FileRequest> files = fileUtils.uploadFiles(params.getFiles()); // 2. 디스크에 파일 업로드
+        fileService.saveFiles(id, files); // 3. 업로드 된 파일 정보를 DB에 저장
         MessageDto message = new MessageDto("게시글 생성이 완료되었습니다.", "/post/list.do", RequestMethod.GET, null);
         return showMessageAndRedirect(message, model);
     }

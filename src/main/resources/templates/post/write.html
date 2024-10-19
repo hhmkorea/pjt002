@@ -12,7 +12,7 @@
 
         <div class="content">
             <seletion>
-                <form id="saveForm" method="post" autocomplete="off"> <!-- /* get:데이터조회, post:데이터생성 */ -->
+                <form id="saveForm" method="post" autocomplete="off" enctype="multipart/form-data"> <!-- /* get:데이터조회, post:데이터생성, enctype="multipart/form-data": 첨부파일 업로드폼*/ -->
                     <!--/* 게시글 수정인 경우, 서버로 전달할 게시글 번호 (PK) */-->
                     <input type="hidden" id="id" name="id" th:if="${post != null}" th:value="${post.id}" />
 
@@ -40,6 +40,23 @@
                             <tr>
                                 <th>내용 <span class="es">필수 입력</span> </th>
                                 <td colspan="3"><textarea id="content" name="content" col="50" row="10" placeholder="내용을 입력해 주세요." ></textarea></td>
+                            </tr>
+                            <tr>
+                                <th>첨부파일 </th>
+                                <td colspan="3">
+                                    <div class="file_list">
+                                        <div>
+                                            <div class="file_input">
+                                                <input type="text" readonly />
+                                                <label> 첨부파일
+                                                    <input type="file" name="files" onchange="selectFile(this);" />
+                                                </label>
+                                            </div>
+                                            <button type="button" onclick="removeFile(this);" class="btns del_btn"><span>삭제</span></button>
+                                            <button type="button" onclick="addFile();" class="btns fn_add_btn"><span>파일 추가</span></button>
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                         </tbody>
                     </table>
@@ -113,6 +130,58 @@
             function goListPage() {
                 const queryString = new URLSearchParams(location.search); // URLSearchParams : 쿼리 스트링을 객체화
                 location.href = '/post/list.do' + '?' + queryString.toString();
+            }
+
+            // 파일 선택
+            function selectFile(element) { // 파일에 변화가 생겼을 때 실행되는 이벤트, 파일 선택 창에서 파일 열기 또는 취소되었을 때 실행되는 onchange 함수
+                // element : HTML을 구성하는 HTMLElement의 부모 객체.
+
+                const file = element.files[0];
+                const filename = element.closest('.file_input').firstElementChild; // closest() : 가장 가까운 선택자를 가져옴, 없으면 Null, 자기자신 포함
+
+                // 1. 파일 선택 창에서 취소 버튼이 클릭된 경우
+                if ( !file ) {
+                    filename.value = '';
+                    return false;
+                }
+
+                // 2. 파일 크기가 10MB를 초과하는 경우
+                const fileSize = Math.floor(file.size / 1024 / 1024); // Math.floor : 소수점 이하 버림.
+                if (fileSize > 10) {
+                    alert('10MB 이하의 파일로 업로드 해주세요.');
+                    filename.value = '';
+                    element.value = '';
+                    return false;
+                }
+
+                // 3. 파일명 지정
+                filename.value = file.name;
+            }
+
+            // 파일 추가
+            function addFile() {
+                const fileDiv = document.createElement('div');
+                fileDiv.innerHTML = `
+                    <div class="file_input">
+                        <input type="text" readonly />
+                        <label> 첨부파일
+                            <input type="file" name="files" onchange="selectFile(this);" />
+                        </label>
+                    </div>
+                    <button type="button" onclick="removeFile(this);" class="btns del_btn"><span>삭제</span></button>
+                `;
+                document.querySelector('.file_list').appendChild(fileDiv);
+            }
+
+            // 파일 삭제
+            function removeFile(element) {
+                const fileAddBtn = element.nextElementSibling; // nextElementSibling : 다음 형제 요소 가져오기
+                if (fileAddBtn) { // 다음 형제 요소가 있으면.
+                    const inputs = element.previousElementSibling.querySelectorAll('input'); // previousElementSibling : 이전 형제요소 가져오기
+                    inputs.forEach(input => input.value = '') // 모두 null 값으로
+                    return false;
+                }
+                element.parentElement.remove(); // 부모 요소 삭제
             }
 
             /*]]>*/

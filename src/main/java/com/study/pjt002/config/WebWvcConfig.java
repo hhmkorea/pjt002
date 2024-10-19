@@ -12,6 +12,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  * author         : dotdot
  * date           : 2024-10-05
  * description    : Interceptor 클래스를 Bean으로 동록해줌.
+ *                  Interceptor? 특정한 URI 호출을 가로채는 역할을 함. 요청과 응답을 가로채서 원하는 동작을 추가하는 역할을 함.
  * ===========================================================
  * DATE              AUTHOR             NOTE
  * -----------------------------------------------------------
@@ -26,7 +27,7 @@ public class WebWvcConfig implements WebMvcConfigurer { // WebMvcConfigurer : @E
         registry.addInterceptor(new LoggerInterceptor()) // 로그용 인터셉터 구현 
                 .excludePathPatterns("/css/**", "/images/**", "/js/**");
 
-        registry.addInterceptor(new LoginCheckInterceptor()) // 모든 URI 접근할때 preHandle() 작동
+        registry.addInterceptor(new LoginCheckInterceptor()) // 모든 URI 접근할때 로그인 여부 확인해서 로그인 화면 띄움
                 .addPathPatterns("/**/*.do")
                 .excludePathPatterns("/log*");
     }

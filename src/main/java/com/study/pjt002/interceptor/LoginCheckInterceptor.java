@@ -17,7 +17,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
  * -----------------------------------------------------------
  * 2024-10-18        dotdot       최초 생성
  */
-public class LoginCheckInterceptor implements HandlerInterceptor {
+public class LoginCheckInterceptor implements HandlerInterceptor { // WebWvcConfig.java 에 Bean으로 호출됨.
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
