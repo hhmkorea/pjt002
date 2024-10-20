@@ -18,15 +18,15 @@
     <!-- 댓글 저장 -->
     <insert id="save" parameterType="com.study.pjt002.domain.comment.CommentRequest" useGeneratedKeys="true" keyProperty="id">
         INSERT INTO tb_comment (
-        <include refid="commentColumns" />
+            <include refid="commentColumns" />
         ) VALUES (
-        #{id}
-        , #{postId}
-        , #{content}
-        , #{writer}
-        , 0
-        , NOW()
-        , NULL
+            #{id}
+            , #{postId}
+            , #{content}
+            , #{writer}
+            , 0
+            , NOW()
+            , NULL
         )
     </insert>
 
@@ -34,11 +34,11 @@
     <!-- 댓글 상세정보 조회 -->
     <select id="findById" parameterType="long" resultType="com.study.pjt002.domain.comment.CommentResponse">
         SELECT
-        <include refid="commentColumns" />
+         <include refid="commentColumns" />
         FROM
-        tb_comment
+            tb_comment
         WHERE
-        id = #{value}
+            id = #{value}
     </select>
 
 

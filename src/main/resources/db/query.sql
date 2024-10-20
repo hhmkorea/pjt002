@@ -12,6 +12,8 @@ SHOW full columns FROM tb_file;
 -- 제약 조건(PK, FK) 조회
 SELECT * FROM information_schema.TABLE_CONSTRAINTS
 WHERE TABLE_NAME = 'tb_file';
+-- 테이블 삭제
+delete from tb_file where  post_id in (18357,18358,18359);
 
 SELECT count(*) FROM tb_member;
 SELECT count(*) FROM tb_comment WHERE delete_yn = 0 AND post_id = '18343';
@@ -21,8 +23,6 @@ SELECT count(*) FROM tb_comment WHERE delete_yn = 0 AND post_id = '18343';
 
 #################### DB, Table 생성 및 관리 ####################
 
--- 테이블 삭제
-# delete from tb_comment where  id = 3;
 -- 데이터 삭제
 # truncate tb_comment;
 -- 사용자 추가 : 유저이름@아이피주소
