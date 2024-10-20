@@ -1,6 +1,6 @@
-# pjt002
-:Spring Boot 게시판 만들기
-## 
+# pjt002 :Spring Boot 게시판 만들기
+* 공통 lib 출처 및 관련 URL : https://congsong.tistory.com/12
+#### 
 ### 개발환경 ---------------------------
      - 개발 언어 : JAVA
      - 개발 도구 : intelliJ
@@ -10,12 +10,12 @@
      - 화면 처리 : Thymeleaf, jQuery(Ajax 비동기 처리)
      - 화면 디자인 : bootstrap
      - 기타 라이브러리 : lombok
-##
+###
 ### Spring Boot ---------------------------
 #### 1. Anotation 문법 
    - 과거 : @RequestMapping(value = "...", method = RequestMethod.XXX)
    - 현재 : @xxxMapping("...")
-##
+###
 ### MyBatis ---------------------------
 #### 1. Mapper
    - Mapper(Java 인터페이스)와 XML Mapper(실제로 DB에 접근해서 호출할 SQL 쿼리를 작성(선언)하는 파일)를 통해 DB와 통신한다.
@@ -25,7 +25,7 @@
 #### 2. 명명 규칙
    - DB에서 테이블의 칼럼명은 언더스코어(_)로 연결된 "스네이크 케이스" 사용 
    - 자바에서 변수명은 소문자로 시작하고, 구분되는 단어의 앞 글자만 대문자로 처리하는 "카멜 케이스" 사용
-##
+###
 ### Themeleaf ---------------------------
 #### 1. Themeleaf vs JSP
    - JSP : Servlet 이라는 형태로 변환되어 실행, Servlet이 자바 소스이다 보니 HTML 코드에서 JAVA 코드를 넣어 동적 웹페이지를 구성
@@ -72,6 +72,3 @@
       #### 3) 동기와 비동기
       ##### - 동기 처리 : 컨트롤러에서 데이터와 화면 두가지를 동시에 처리 
       ##### - 비동기 처리 : 화면 내에서 데이터의 처리(CRUD 등)를 실시간으로 서버에 요청. 페이지를 로딩하지 않고, <font color='orange'>Ajax를 이용해 실시간으로 서버와 데이터 주고 받음.</font>
-
-##
-### ※ 소스 출처 및 참고 자료 : https://congsong.tistory.com/12
