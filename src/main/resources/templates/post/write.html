@@ -111,7 +111,7 @@
                 filenameInputs.forEach((input, i) => {
                     const fileInput = input.nextElementSibling.firstElementChild; // 다음 형제요소 첫번째 자식 요소
                     const fileRemoveBtn = input.parentElement.nextElementSibling; // 부모 요소의 다음 형제 요소
-                    fileInput.setAttribute('onchange', `selectFile(this. ${response[i].id})`); // onchange 이벤트 추가.
+                    fileInput.setAttribute('onchange', `selectFile(this, ${response[i].id})`); // onchange 이벤트 추가.
                     fileRemoveBtn.setAttribute('onclick', `removeFile(this, ${response[i].id})`); // 삭제버튼 클릭 이벤트 추가.
                     input.value = response[i].originalName;
                 })
