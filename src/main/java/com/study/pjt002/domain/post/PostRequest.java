@@ -30,4 +30,5 @@ public class PostRequest {
     private Boolean noticeYn;                               // 공지글 여부
     private List<MultipartFile> files = new ArrayList<>();  // 첨부파일 List
 
+    private List<Long> removeFileIds = new ArrayList<>();   // 삭제할 첨부파일 id List, write.html에 익명함수로 지정됨.
 }

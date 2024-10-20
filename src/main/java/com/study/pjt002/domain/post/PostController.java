@@ -5,6 +5,7 @@ import com.study.pjt002.common.dto.SearchDto;
 import com.study.pjt002.common.file.FileUtils;
 import com.study.pjt002.common.paging.PagingResponse;
 import com.study.pjt002.domain.file.FileRequest;
+import com.study.pjt002.domain.file.FileResponse;
 import com.study.pjt002.domain.file.FileService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -91,7 +92,25 @@ public class PostController {
     // 기존 게시글 수정
     @PostMapping("/post/update.do")
     public String updatePost(final PostRequest params, final SearchDto queryParams, Model model) {
+
+        // 1. 게시글 정보 수정
         postService.updatePost(params);
+
+        // 2. 파일 업로드 (to disk)
+        List<FileRequest> uploadFiles = fileUtils.uploadFiles(params.getFiles());
+
+        // 3. 파일 정보 저장 (to database)
+        fileService.saveFiles(params.getId(), uploadFiles);
+
+        // 4. 삭제할 파일 정보 조회 (from database)
+        List<FileResponse> deleteFiles = fileService.findAllFileByIds(params.getRemoveFileIds());
+
+        // 5. 파일 삭제 (from disk)
+        fileUtils.deleteFiles(deleteFiles);
+
+        // 6. 파일 삭제 (from database)
+        fileService.deleteAllFileByIds(params.getRemoveFileIds());
+
         MessageDto message = new MessageDto("게시글 수정이 완료되었습니다.", "/post/list.do", RequestMethod.GET, queryParamsToMap(queryParams));// queryParams: 이전 페이지 정보.
         return showMessageAndRedirect(message, model);
     }

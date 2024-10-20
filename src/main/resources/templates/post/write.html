@@ -13,11 +13,15 @@
         <div class="content">
             <seletion>
                 <form id="saveForm" method="post" autocomplete="off" enctype="multipart/form-data"> <!-- /* get:데이터조회, post:데이터생성, enctype="multipart/form-data": 첨부파일 업로드폼*/ -->
-                    <!--/* 게시글 수정인 경우, 서버로 전달할 게시글 번호 (PK) */-->
+                    <!-- /* 게시글 수정인 경우, 서버로 전달할 게시글 번호 (PK) */ -->
                     <input type="hidden" id="id" name="id" th:if="${post != null}" th:value="${post.id}" />
 
-                    <!--/* 서버로 전달할 공지글 여부 */-->
+                    <!-- /* 서버로 전달할 공지글 여부 */ -->
                     <input type="hidden" id="noticeYn" name="noticeYn" />
+
+                    <!-- /* 삭제 처리할 파일 번호 */ : PostRequest.java에 지정한 리스트 변수, js에 익명함수로 담아둠 -->
+                    <input type="hidden" id="removeFileIds" name="removeFileIds">
+
                     <table class="tb tb_row">
                         <colgroup>
                             <col style="width: 15%;" /><col style="width: 15%" /><col style="width: 35%;" />
@@ -74,8 +78,44 @@
             /*<![CDATA[*/
 
             window.onload = () => { // 페이지 로딩 시점에 단 한번만 실행되는 코드.
-                //initCeateDate();
+                // PostController.java --> openPostWrite()
                 renderPostInfo();
+
+                findAllFile(); // 수정 시점에 기존에 등록한 첨부파일이 있다면 첨부파일 보여줘야함.
+            }
+
+            // 전체 파일 조회
+            function findAllFile() {
+
+                // 1. 신규 등록/수정 체크
+                const post = [[ ${post} ]]; // postService.findPostById(id);
+                if ( !post ) { // 게시물이 없을 경우
+                    return false;
+                }
+
+                // 2. API 호출
+                const response = getJson(`/posts/${post.id}/files`);
+
+                // 3. 로직 종료
+                if ( !response.length ) { // 파일이 없을 경우
+                    return false;
+                }
+
+                // 4. 업로드 영역 추가
+                for (let i = 0, len = (response.length - 1); i < len; i++) { // response.length - 1 : 기본적으로 메인 첨부파일 영역이 있으므로 빼줌.
+                    addFile(); // 첨부파일 영역에 업로드 HTML을 추가해주는 기능을 함.
+                }
+
+                // 5. 파일 선택 & 삭제 이벤트 재선언 & 파일명 세팅
+                const filenameInputs = document.querySelectorAll('.file_list input[type="text"]');
+                filenameInputs.forEach((input, i) => {
+                    const fileInput = input.nextElementSibling.firstElementChild; // 다음 형제요소 첫번째 자식 요소
+                    const fileRemoveBtn = input.parentElement.nextElementSibling; // 부모 요소의 다음 형제 요소
+                    fileInput.setAttribute('onchange', `selectFile(this. ${response[i].id})`); // onchange 이벤트 추가.
+                    fileRemoveBtn.setAttribute('onclick', `removeFile(this, ${response[i].id})`); // 삭제버튼 클릭 이벤트 추가.
+                    input.value = response[i].originalName;
+                })
+
             }
 
             // 게시글 상세정보 랜더링
@@ -122,6 +162,7 @@
 
                 document.getElementById('saveBtn').disabled = true; // 데이터 중복 방지를 위해 저장버튼 비활성화.
                 form.noticeYn.value = form.isNotice.checked; // 공지글 여부 값 세팅.
+                form.removeFileIds.value = removeFileId.getAll().join(); // join() : 배열에 담긴 모든 값을 ,로 연결. 인자로 전달한 값을 기준으로 배열의 모든 값을 문자열로 연결해서 리턴해주는 함수.
                 form.action = [[ ${post == null} ]] ? '/post/save.do' : '/post/update.do'; // form을 action에 지정된 URI(컨트롤러의 메서드)로 폼 데이터(parameter)를 전달.
                 form.submit(); // 폼 데이터(parameter)를 서버(controller)로 전달.
             }
@@ -132,8 +173,25 @@
                 location.href = '/post/list.do' + '?' + queryString.toString();
             }
 
+            // 파일 삭제 처리용 익명 함수 : 기존에 업로드된 첨부파일이 삭데될 때 삭제된 파일의 id(PK)를 담는 용도로 이용 --> 위치에 영향을 받으므로 selectFile(), removeFile() 앞쪽에 선언.
+            // 익명함수? js 전역 변수의 문제점을 해결하는 방법 중 하나.
+            const removeFileId = (function() {
+                const ids = []; // 삭제 처리할 첨부파일 id를 저장하는 용도의 배열, 임시 배열.
+                return {
+                    add(id) { // 삭제처리할 첨부파일 id 추가
+                        if (ids.includes(id)) { // includes() : 배열 안에 중복되는 값이 있는지 체크, 없는 경우에만 id 추가
+                            return false;
+                        }
+                        ids.push(id);
+                    },
+                    getAll() { // 변경 또는 삭제된 모든 파일의 id 조회.
+                        return ids;
+                    }
+                }
+            }()); // --> FileRequest.java에 removeFileIds 변수에 담김.
+
             // 파일 선택
-            function selectFile(element) { // 파일에 변화가 생겼을 때 실행되는 이벤트, 파일 선택 창에서 파일 열기 또는 취소되었을 때 실행되는 onchange 함수
+            function selectFile(element, id) { // 파일에 변화가 생겼을 때 실행되는 이벤트, 파일 선택 창에서 파일 열기 또는 취소되었을 때 실행되는 onchange 함수
                 // element : HTML을 구성하는 HTMLElement의 부모 객체.
 
                 const file = element.files[0];
@@ -156,6 +214,11 @@
 
                 // 3. 파일명 지정
                 filename.value = file.name;
+
+                // 4. 삭제할 파일 id 추가
+                if (id) { // 수정 시점에만 id가 있으므로 id 체크.
+                    removeFileId.add(id); // removeFileId : 익명함수
+                }
             }
 
             // 파일 추가
@@ -174,7 +237,14 @@
             }
 
             // 파일 삭제
-            function removeFile(element) {
+            function removeFile(element, id) {
+
+                // 1. 삭제할 파일 id 추가
+                if (id) {
+                    removeFileId.add(id); // removeFileId : 익명함수
+                }
+
+                // 2. 파일 영역 초기화 & 삭제
                 const fileAddBtn = element.nextElementSibling; // nextElementSibling : 다음 형제 요소 가져오기
                 if (fileAddBtn) { // 다음 형제 요소가 있으면.
                     const inputs = element.previousElementSibling.querySelectorAll('input'); // previousElementSibling : 이전 형제요소 가져오기
