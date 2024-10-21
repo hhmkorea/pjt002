@@ -1,15 +1,19 @@
 # pjt002 :Spring Boot 게시판 만들기
-* 공통 lib 출처 및 관련 URL : https://congsong.tistory.com/12
+* 관련 URL : https://congsong.tistory.com/12
 #### 
 ### 개발환경 ---------------------------
-     - 개발 언어 : JAVA
-     - 개발 도구 : intelliJ
-     - 프레임워크 : Spring Boot(Tomcat Server 내장), MyBatis(DB 통신)
-     - 데이타베이스 : mariaDB
-     - 빌드 도구 : Gradle
-     - 화면 처리 : Thymeleaf, jQuery(Ajax 비동기 처리)
-     - 화면 디자인 : bootstrap
-     - 기타 라이브러리 : lombok
+- 개발 언어 : JAVA
+- 개발 도구 : intelliJ
+- 프레임워크 : Spring Boot(Tomcat Server 내장), MyBatis(DB 통신)
+- 데이타베이스 : mariaDB
+- 빌드 도구 : Gradle
+- 화면 처리 : Thymeleaf, jQuery(Ajax 비동기 처리)
+- 화면 디자인 : 아인커뮤니케이션
+  https://congsong.tistory.com/16 
+
+            6. CSS 적용하기 --> 6-1) 압축 해제 및 폴더 추가하기 --> static.zip
+
+- 기타 라이브러리 : lombok
 ###
 ### Spring Boot ---------------------------
 #### 1. Anotation 문법 
